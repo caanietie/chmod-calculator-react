@@ -1,0 +1,11 @@
+.permScreen {
+    gap: 10px;
+    display: flex;
+    margin-bottom: 15px;
+    justify-content: center;
+
+    span {
+        padding: 4px;
+        font-size: 20px;
+    }
+}

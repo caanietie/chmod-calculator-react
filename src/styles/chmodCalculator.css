@@ -1,0 +1,21 @@
+.chmodCalculator {
+  h2 {
+    text-align: center;
+  }
+
+  .clearPerm {
+    border: none;
+    padding: 10px;
+    display: block;
+    font-size: 17px;
+    margin: 15px auto;
+    border-radius: 5px;
+  }
+
+  .permCtl {
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

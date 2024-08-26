@@ -1,64 +1,30 @@
+import "../styles/permNumber.css";
+import PermText from "../elements/PermText";
+import { constant, permNumFromArray, permArrayFromNum } from "../utils";
+
 export default function PermNumber(props){
+  const {USER, GROUP, OTHERS, ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN} = constant;
   const {permUser, permObj, setPermission} = props;
-  const validKeys = ["0", "1", "2", "3", "4", "5", "6", "7"];
 
-  const permFromString = str => {
-    switch(str){
-      case "r": return 1;
-      case "w": return 2;
-      case "x": return 4;
-      default: return 0;
-    }
+  const keyPress = (key, usr) => {
+    if([ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN].includes(key))
+      setPermission({payload: {user: usr, perms: permArrayFromNum(+key)}});
   };
 
-  const arrayFromPerm = permNum => {
-    switch(permNum){
-      case 1: return ["r", "-", "-"];
-      case 2: return ["-", "w", "-"];
-      case 3: return ["r", "w", "-"];
-      case 4: return ["-", "-", "x"];
-      case 5: return ["r", "-", "x"];
-      case 6: return ["-", "w", "x"];
-      case 7: return ["r", "w", "x"];
-      default: return ["-", "-", "-"];
-    }
-  };
-
-  const permFromArray = user => {
-    return permObj[user].map(str => permFromString(str)).reduce((nm, pm) => nm + pm);
-  };
+  const isDisabled = usr => { return permUser !== usr };
 
   return (
-    <div style={{marginLeft: 20}}>
-      <input type="number" min={0} max={7} disabled={permUser !== "user"}
-        style={{paddingTop: 12, paddingBottom: 12, marginRight: 10, fontSize: 15, textAlign: "center"}}
-        value={permFromArray("user")}
-        onKeyPress={ev => {
-          if(validKeys.includes(ev.key))
-            setPermission({
-              payload: {user: "user", perms: arrayFromPerm(+ev.key)}
-            });
-        }}
+    <div className="permNumber">
+      <PermText disabled={isDisabled(USER)} keyPress={key => keyPress(key, USER)}
+        value={permNumFromArray(permObj, USER)}
       />
-      <input type="number" min={0} max={7} disabled={permUser !== "group"}
-        style={{paddingTop: 12, paddingBottom: 12, marginRight: 10, fontSize: 15, textAlign: "center"}}
-        value={permFromArray("group")}
-        onKeyPress={ev => {
-          if(validKeys.includes(ev.key))
-            setPermission({
-              payload: {user: "group", perms: arrayFromPerm(+ev.key)}
-            });
-        }}
+
+      <PermText disabled={isDisabled(GROUP)} keyPress={key => keyPress(key, GROUP)}
+        value={permNumFromArray(permObj, GROUP)}
       />
-      <input type="number" min={0} max={7} disabled={permUser !== "others"}
-        style={{paddingTop: 12, paddingBottom: 12, marginRight: 10, fontSize: 15, textAlign: "center"}}
-        value={permFromArray("others")}
-        onKeyPress={ev => {
-          if(validKeys.includes(ev.key))
-            setPermission({
-              payload: {user: "others", perms: arrayFromPerm(+ev.key)}
-            });
-        }}
+
+      <PermText disabled={isDisabled(OTHERS)} keyPress={key => keyPress(key, OTHERS)}
+        value={permNumFromArray(permObj, OTHERS)}
       />
     </div>
   );

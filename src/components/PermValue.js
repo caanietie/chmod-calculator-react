@@ -1,32 +1,38 @@
-import PermType from "../elements/PermElement";
+import {constant} from "../utils";
+import PermButton from "../elements/PermButton";
 
 export default function PermValue(props){
+  const {ZERO, ONE, TWO, R_PERM, W_PERM, X_PERM, NO_PERM} = constant;
   const {setPermission, permUser, permObj} = props;
 
+  const isChecked = (idx, prm) => {
+    return permObj[permUser][idx] === prm
+  }
+
   return (
-    <div>
-      <PermType divStyle={{paddingLeft: 5}} inputName="rwx" inputType="checkbox"
-        checked={permObj[permUser][0] === "r"} labelText="Read Permission"
+    <div className="permValue">
+      <PermButton divStyle={{paddingLeft: 5}} inputName="rwx" inputType="checkbox"
+        checked={isChecked(+ZERO, R_PERM)} labelText="Read Permission"
         onClick={() => {
-          let r = permObj[permUser][0] === "-" ? "r" : "-";
+          let r = isChecked(+ZERO, R_PERM) ? NO_PERM : R_PERM;
           setPermission({
             payload: {user: permUser, perms: [r, permObj[permUser][1], permObj[permUser][2]]}
           })}}
       />
 
-      <PermType divStyle={{paddingLeft: 5}} inputName="rwx" inputType="checkbox"
-        checked={permObj[permUser][1] === "w"} labelText="Write Permission"
+      <PermButton divStyle={{paddingLeft: 5}} inputName="rwx" inputType="checkbox"
+        checked={isChecked(+ONE, W_PERM)} labelText="Write Permission"
         onClick={() => {
-          let w = permObj[permUser][1] === "-" ? "w" : "-";
+          let w = isChecked(+ONE, W_PERM) ? NO_PERM : W_PERM;
           setPermission({
             payload: {user: permUser, perms: [permObj[permUser][0], w, permObj[permUser][2]]}
           })}}
       />
 
-      <PermType divStyle={{paddingLeft: 5}} inputName="rwx" inputType="checkbox"
-        checked={permObj[permUser][2] === "x"} labelText="Execute Permission"
+      <PermButton divStyle={{paddingLeft: 5}} inputName="rwx" inputType="checkbox"
+        checked={isChecked(+TWO, X_PERM)} labelText="Execute Permission"
         onClick={() => {
-          let x = permObj[permUser][2] === "-" ? "x" : "-";
+          let x = isChecked(+TWO, X_PERM) ? NO_PERM : X_PERM;
           setPermission({
             payload: {user: permUser, perms: [permObj[permUser][0], permObj[permUser][1], x]}
           })}}

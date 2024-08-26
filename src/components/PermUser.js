@@ -1,20 +1,26 @@
-import PermType from "../elements/PermElement";
+import {constant} from "../utils";
+import PermButton from "../elements/PermButton";
 
 export default function PermUser(props){
   const {permUser, setPermission} = props;
+  const {USER, GROUP, OTHERS} = constant;
+
+  const isChecked = usr => {
+    return permUser === usr;
+  }
 
   return (
-    <div>
-      <PermType divStyle={{marginRight: 20}} inputName="ugo" labelText="User Permission"
-        inputType="radio" checked={permUser === "user"} onClick={() => setPermission("user")}
+    <div className="permUser">
+      <PermButton divStyle={{marginRight: 20}} inputName="ugo" labelText="User Permission"
+        inputType="radio" checked={isChecked(USER)} onClick={() => setPermission(USER)}
       />
 
-      <PermType divStyle={{marginRight: 20}} inputName="ugo" labelText="Group Permission"
-        inputType="radio" checked={permUser === "group"} onClick={() => setPermission("group")}
+      <PermButton divStyle={{marginRight: 20}} inputName="ugo" labelText="Group Permission"
+        inputType="radio" checked={isChecked(GROUP)} onClick={() => setPermission(GROUP)}
       />
 
-      <PermType divStyle={{marginRight: 20}} inputName="ugo" labelText="Others Permission"
-        inputType="radio" checked={permUser === "others"} onClick={() => setPermission("others")}
+      <PermButton divStyle={{marginRight: 20}} inputName="ugo" labelText="Others Permission"
+        inputType="radio" checked={isChecked(OTHERS)} onClick={() => setPermission(OTHERS)}
       />
     </div>
   );

@@ -1,0 +1,10 @@
+.permNumber {
+    margin-left: 20px;
+
+    input {
+        padding-top: 12px;
+        text-align: center;
+        margin-right: 10px;
+        padding-bottom: 12px;
+    }
+}
